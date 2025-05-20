@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const App = () => {
   const [images, setImages] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [emojiSizes, setEmojiSizes] = useState([]);
 
   const addImage = () => {
     const randomId = Math.floor(Math.random() * 1000); 
@@ -12,11 +12,14 @@ const App = () => {
       id: randomId,
       url: `https://picsum.photos/150?random=${randomId}`,
     };
-    setImages([...images, newImage]); 
+    setImages([...images, newImage]);
+    setEmojiSizes([...emojiSizes, 20]);
   };
 
   const handleImageClick = (index) => {
-    setSelectedIndex(index === selectedIndex ? null : index); 
+    const newSizes = [...emojiSizes];
+    newSizes[index] += 5; 
+    setEmojiSizes(newSizes);
   };
 
   return (
@@ -39,7 +42,7 @@ const App = () => {
             style={{
               display: "flex",
               flexDirection: "row",
-              alignItems: "center",              
+              alignItems: "center",
             }}
           >
             <img
@@ -52,7 +55,7 @@ const App = () => {
             />
             <span
               style={{
-                fontSize: selectedIndex === index ? "50px" : "28px",
+                fontSize: `${emojiSizes[index]}px`,
                 marginLeft: "10px",
                 transition: "all 0.2s ease",
               }}
